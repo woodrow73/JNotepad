@@ -18,24 +18,31 @@ public class Gui implements ActionListener {
     private JTextArea textArea;
     private JScrollPane scrollPane;
 
-    private final FileService fileService;
-    private final EditService editService;
-    private final FormatService formatService;
-    private final HelpService helpService;
+    private FileService fileService;
+    private EditService editService;
+    private FormatService formatService;
+    private HelpService helpService;
 
-    private final Find findFrame;
+    private Find findFrame;
 
     public Gui(String title, int x, int y, int width, int height, Font font, boolean lineWrap) {
         createFrame(title, x, y, width, height);
         createTextArea(font, lineWrap);
 
-        fileService = new FileService(this, new String[]{"Save", "Don't Save", "Cancel"});
+        Gui thisGui = this;
+        SwingWorker<Void, Void> worker = new SwingWorker<>() {
+            @Override
+            protected Void doInBackground() {
+                fileService = new FileService(thisGui, new String[]{"Save", "Don't Save", "Cancel"});
+                formatService = new FormatService(thisGui);
+                helpService = new HelpService(thisGui);
+                findFrame = new Find(thisGui, textArea, icon());
+                return null;
+            }
+        };
+        worker.execute();
+
         editService = new EditService(this, 1000);
-        formatService = new FormatService(this);
-        helpService = new HelpService(this);
-
-        findFrame = new Find(this, textArea, icon());
-
         frame.setVisible(true);
     }
 
