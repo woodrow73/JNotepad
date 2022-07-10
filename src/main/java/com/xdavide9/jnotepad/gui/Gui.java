@@ -1,5 +1,6 @@
 package com.xdavide9.jnotepad.gui;
 
+import com.xdavide9.jnotepad.JNotepad;
 import com.xdavide9.jnotepad.services.*;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -34,10 +35,17 @@ public class Gui implements ActionListener {
             @Override
             protected Void doInBackground() {
                 fileService = new FileService(thisGui, new String[]{"Save", "Don't Save", "Cancel"});
+
                 formatService = new FormatService(thisGui);
                 helpService = new HelpService(thisGui);
                 findFrame = new Find(thisGui, textArea, icon());
                 return null;
+            }
+
+            @Override
+            protected void done() {
+                if(Objects.nonNull(JNotepad.pathToOpen))
+                    fileService.setPath(JNotepad.pathToOpen);
             }
         };
         worker.execute();

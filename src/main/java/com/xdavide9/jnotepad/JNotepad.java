@@ -23,7 +23,7 @@ public class JNotepad {
     private ConfigurationSerializer configurationSerializer;
     private Gui gui;
 
-    private static String pathToOpen;
+    public static String pathToOpen;
 
     public static final String APP_NAME = "BetterNotePad";
     public static final String DEFAULT_FONT_FAMILY = "Segoe UI";
@@ -102,7 +102,6 @@ public class JNotepad {
             String fileName = builder.substring(builder.lastIndexOf("\\") + 1);
 
             gui.getFrame().setTitle(fileName);
-            gui.getFileService().setPath(pathToOpen);
 
             log.info("Successfully opened file provided from the arguments");
         } catch (Exception e) {
