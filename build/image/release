@@ -1,0 +1,2 @@
+JAVA_VERSION="17.0.2"
+MODULES="java.base java.datatransfer java.xml java.prefs java.desktop com.formdev.flatlaf java.management java.logging java.security.sasl java.naming java.transaction.xa java.sql com.xdavide9.merged.module org.apache.commons.lang3 com.xdavide9.jnotepad"

@@ -12,12 +12,19 @@ buildscript {
 plugins {
     id 'java'
     id 'com.github.johnrengelman.shadow' version '7.0.0'
+    id 'org.beryx.jlink' version '2.25.0'
+}
+
+group 'com.xdavide9'
+version '1.2.3'
+
+application {
+    mainClassName("com.xdavide9.jnotepad.JNotepad")
+    mainModule.set("com.xdavide9.jnotepad");
+
 }
 
 apply plugin: "com.github.johnrengelman.shadow"
-
-group 'org.example'
-version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
@@ -33,6 +40,22 @@ dependencies {
 
     testCompileOnly 'org.projectlombok:lombok:1.18.24'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
+}
+
+jlink {
+
+    def iconPath = 'src/main/resources/com/xdavide9/jnotepad/icon.ico'
+
+    options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
+    launcher {
+        name = 'JNotepad'
+    }
+
+    jpackage {
+        imageOptions = ["--icon", "src/main/resources/com/xdavide9/jnotepad/icon.ico"]
+        installerOptions = ['--win-dir-chooser', "--icon", "src/main/resources/com/xdavide9/jnotepad/icon.ico"]
+        installerOptions += '--verbose'
+    }
 }
 
 jar {
